@@ -1,0 +1,5 @@
+html[data-theme="light"] {
+    --color-primary: black;
+    --color-secondary: white;
+    /* Note we do not need to overwrite the primary font */
+}
