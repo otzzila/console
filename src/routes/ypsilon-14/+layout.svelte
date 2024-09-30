@@ -7,7 +7,7 @@
 </script>
 
 <Crt>
-    <div class="p-4 max-h-full">
+    <div class="m-4 max-h-full">
         {@render children()}
     </div>
 </Crt>

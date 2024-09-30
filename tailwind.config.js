@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondart)',
+        secondary: 'var(--color-secondary)',
       },
       fontFamily: {
         primary: ['var(--font-family-primary)', ...defaultTheme.fontFamily.mono] 
@@ -16,6 +16,13 @@ export default {
       }
     },
   },
+  // Classes to build even if not explicitly written
+  safelist: [
+    {
+      pattern: /(bg|text)-(primary|secondary|warn|error)/,
+      variants: ['hover', 'focus'],
+    }
+  ],
   plugins: [],
 }
 

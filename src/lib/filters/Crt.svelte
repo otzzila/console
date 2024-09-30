@@ -89,8 +89,8 @@
                 <!-- merge the source graphic and the offset rectangles together -->
                 <feMerge result="MERGED_SOURCE">
                     <feMergeNode in="SourceGraphic"/>
-                    <feMergeNode in="LEFT_OFFSET_RECT" />
-                    <feMergeNode in="RIGHT_OFFSET_RECT" />
+                    <!-- <feMergeNode in="LEFT_OFFSET_RECT" />
+                    <feMergeNode in="RIGHT_OFFSET_RECT" /> -->
                 </feMerge>
 
             
@@ -180,10 +180,11 @@
     <!-- here I added it to the .tv class in my css-->
     <div class="tv">
         <!-- two colored (red & blue) stripes that animate down the screen for a more realistic CRT look -->
-        <div class="stripe red-stripe"></div>
+        <!--<div class="stripe red-stripe"></div>
         <div class="stripe blue-stripe"></div>
+            -->
         
-        <div id="tv-content" class="pointer-events-auto w-full h-full">
+        <div id="tv-content" class="pointer-events-auto w-full h-full max-h-full max-w-full">
             {#if children}
                 {@render children()}
             {:else}
@@ -232,15 +233,14 @@
     .tv {
         width: 100%;
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
         position: absolute;
         top: 0;
-        background: linear-gradient(to bottom, hsl(255, 0%, 20%), hsl(255, 0%, 50%));
-
-        
+        /*background: linear-gradient(to bottom, hsl(255, 0%, 20%), hsl(255, 0%, 50%)); */
+        background-color: var(--color-secondary);
         filter: url(#crt-filter); /* *** This is where I added the filter *** */
     }
-
+    
     /* stripes */
     .stripe {
         width: 100%;

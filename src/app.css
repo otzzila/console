@@ -12,7 +12,9 @@
 @layer base {
 	html {
 		--color-primary: white;
-		--color-secondary: black;
+		--color-secondary: rgb(64, 64, 64);
+		--color-error: red;
+		--color-warn: yellow;
 		--font-family-primary: "IBM VGA 9x16";
 	}
 }

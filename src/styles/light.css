@@ -1,5 +1,5 @@
 html[data-theme="light"] {
-    --color-primary: black;
-    --color-secondary: white;
+    --color-primary: rgb(64, 64, 64);
+    --color-secondary: rgb(200,200,200);
     /* Note we do not need to overwrite the primary font */
 }

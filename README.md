@@ -46,3 +46,10 @@ Replaced with just in time mode
 ```bash
 npx tailwindcss -i ./src/app-input.css -o ./src/app-output.css --watch
 ```
+
+
+# NOTES
+
+Do not put overflow-auto inside the big css filter. Just let the filtering element scroll (or something above it if you want the scrollbar to be better seen)
+
+https://stackoverflow.com/questions/11088674/shift-focus-with-arrow-keys-in-javascript
