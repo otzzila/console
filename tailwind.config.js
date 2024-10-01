@@ -9,6 +9,8 @@ export default {
       colors: {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
+        warn: 'var(--color-warn)',
+        error: 'var(--color-error)',
       },
       fontFamily: {
         primary: ['var(--font-family-primary)', ...defaultTheme.fontFamily.mono] 
