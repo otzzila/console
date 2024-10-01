@@ -244,8 +244,9 @@
         overflow: auto;
         position: absolute;
         top: 0;
-        /*background: linear-gradient(to bottom, hsl(255, 0%, 20%), hsl(255, 0%, 50%)); */
-        background-color: var(--color-secondary);
+        /* I have no why clue but this fixed black screen on chrome */
+        background: linear-gradient(to bottom, var(--color-secondary), var(--color-secondary));
+        /* background: var(--color-secondary); */
         filter: url(#crt-filter); /* *** This is where I added the filter *** */
     }
 
