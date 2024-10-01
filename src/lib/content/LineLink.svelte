@@ -1,17 +1,17 @@
 <script lang="ts">
+	import type { HasChildren } from "$lib/util";
 	import type { ComponentProps, Snippet } from "svelte";
 
-    interface LineLinkProps {
-        children?: Snippet,
+    interface LineLinkProps extends HasChildren, ThemeColoredProps {
         href?: string,
         disabled?: boolean,
         selected?: boolean,
         onclick?: (() => any)
-    }
+    } 
 
     let { children, href = "#!", disabled = false, onclick,
         fgColor = 'primary', bgColor = 'secondary',
-     ...others}: LineLinkProps & ThemeColoredProps = $props();
+     ...others}: LineLinkProps  = $props();
 
 </script>
 
