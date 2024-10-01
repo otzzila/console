@@ -18,9 +18,9 @@
         if (leftOffsetRect){
             gsap.to(leftOffsetRect, {
                 attr: {
-                    y: "800"
+                    y: "1800"
                 },
-                duration: 5,
+                duration: 13,
                 repeat: -1,
                 ease: "none"
             })
@@ -29,12 +29,12 @@
         if (rightOffsetRect){
             gsap.to(rightOffsetRect, {
                 attr: {
-                    y: "800"
+                    y: "1800"
                 },
-                duration: 5,
+                duration: 13,
                 repeat: -1,
                 ease: "none",
-                delay: 2.5
+                delay: 7.5
             })
         }
     })
@@ -66,8 +66,8 @@
             <rect x="0" y="0" id="phosphor-filled-rect" width="100%" height="100%" fill="url(#phosphor-dot-fill)"/>
 
             <!-- create base rectangles for glitch animation -->
-            <rect id="left-offset-rect" x="0" y="-100" width="100%" height="50%"/>
-            <rect id="right-offset-rect" x="0" y="-100" width="100%" height="50%"/>
+            <rect bind:this={leftOffsetRect} id="left-offset-rect" x="0" y="-100" width="100%" height="50%"/>
+            <rect bind:this={rightOffsetRect} id="right-offset-rect" x="0" y="-100" width="100%" height="50%"/>
             
             <filter id="crt-filter">
 
@@ -89,8 +89,8 @@
                 <!-- merge the source graphic and the offset rectangles together -->
                 <feMerge result="MERGED_SOURCE">
                     <feMergeNode in="SourceGraphic"/>
-                    <!-- <feMergeNode in="LEFT_OFFSET_RECT" />
-                    <feMergeNode in="RIGHT_OFFSET_RECT" /> -->
+                    <feMergeNode in="LEFT_OFFSET_RECT" />
+                    <feMergeNode in="RIGHT_OFFSET_RECT" />
                 </feMerge>
 
             
@@ -161,7 +161,7 @@
                 </feMerge>
                 
                 <!-- blur for a more realistic look -->
-                <feGaussianBlur stdDeviation="1.3" result="BLUR"/>
+                <feGaussianBlur stdDeviation="1.5" result="BLUR"/>
                 
                 <!-- brighten all the pixels a bit -->
                 <feColorMatrix
@@ -180,21 +180,29 @@
     <!-- here I added it to the .tv class in my css-->
     <div class="tv">
         <!-- two colored (red & blue) stripes that animate down the screen for a more realistic CRT look -->
-        <!--<div class="stripe red-stripe"></div>
+        <!--
+        <div class="stripe red-stripe"></div>
         <div class="stripe blue-stripe"></div>
             -->
+        
+        <div id="stripe-container" class="absolute w-full h-full overflow-clip">
+            <div class="stripe red-stripe"></div>
+            <div class="stripe blue-stripe"></div>
+        </div>
         
         <div id="tv-content" class="pointer-events-auto w-full h-full max-h-full max-w-full">
             {#if children}
                 {@render children()}
             {:else}
-                <div class="w-full h-fullflex flex-col justify-center content-center items-center">
+                <div class="w-full h-full flex flex-col justify-center content-center items-center">
                     <!-- Example 1. 404 error page -->
                     <h1 class="error-title">404</h1>
                     <h4 class="error-scnd-title">PAGE NOT FOUND</h4>
                     <div class="rainbow-rect"></div>
                 </div>
             {/if}
+
+            
         </div>   
         
         
@@ -240,13 +248,14 @@
         background-color: var(--color-secondary);
         filter: url(#crt-filter); /* *** This is where I added the filter *** */
     }
-    
+
     /* stripes */
     .stripe {
-        width: 100%;
-        height: 20vmin;
+        width: 120%;
+        left: -10%;
+        height: 21px;
         filter: blur(40px);
-        opacity: 0.1;
+        opacity: 0.12;
         position: absolute;
         top: -100%;
         animation: stripeAnim 10s linear infinite;
