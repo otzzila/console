@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { enhance } from '$app/forms';
+
 	import LineButton from '$lib/content/LineButton.svelte';
 	import LineLink from '$lib/content/LineLink.svelte';
 	import RawText from '$lib/content/RawText.svelte';
@@ -32,7 +34,7 @@
 
 {#snippet airlock(name: AirlockName)}
     {@const {newState, actionText} = getAirlockAction(name) }
-    <form method="post" action="/ypsilon-14/airlocks?/modifyAirlock">
+    <form method="post" action="/ypsilon-14/airlocks?/modifyAirlock" use:enhance>
         <input type="hidden" name="target" value={name} />
         <input type="hidden" name="status" value={newState} />
         <LineButton>{(name as string).padEnd(10,' ')} {statusString(name)} [&gt; {actionText}]</LineButton>

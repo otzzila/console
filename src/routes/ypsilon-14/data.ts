@@ -13,3 +13,11 @@ export enum AirlockName {
     BAY2 = "BAY2",
     MINESHAFT = "MINESHAFT",
 }
+
+
+export interface Status {
+    airlocks: Record<AirlockName, AirlockState>,
+    showers: boolean[],
+    hasAdmin: boolean,
+    lifeSupport: boolean,
+}
