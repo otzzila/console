@@ -2,22 +2,22 @@ import type { PageServerLoad, Actions } from './$types';
 
 import { setLifeSupport, getHasAdmin, getLifeSupport } from '$lib/server/ypsilon-14/data';
 
-export const load: PageServerLoad = () => {
-    return {lifeSupport: getLifeSupport()}
+export const load: PageServerLoad = async () => {
+    return {lifeSupport: await getLifeSupport()}
 }
 
 export const actions = {
     default: async ({request}) => {
 
-        if (getHasAdmin()){
+        if (await getHasAdmin()){
             const data = await request.formData()
 
             const newState = data.get('status') as string === 'true'
 
             setLifeSupport(newState)
-            return {lifeSupport: getLifeSupport()} 
+            return {} 
         } else {
-            return {lifeSupport: getLifeSupport(), errorMsg: 'ERROR: UNAUTHORIZED'} 
+            return {errorMsg: 'ERROR: UNAUTHORIZED'} 
         }
           
         

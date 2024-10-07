@@ -9,7 +9,7 @@
 	let {data, form}: {data: PageData, form: ActionData} = $props()
     
     // Most recent airlock information
-    let airlocks = $derived(form?.airlocks ?? data.airlocks)
+    let airlocks = $derived(data.airlocks)
 
     $effect(() =>{
         console.log({airlocks})

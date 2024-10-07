@@ -1,9 +1,9 @@
 import type { PageServerLoad, Actions } from './$types';
 
-import { showers } from '$lib/server/ypsilon-14/data';
+import { setShower, getShowers } from '$lib/server/ypsilon-14/data';
 
-export const load: PageServerLoad = () => {
-    return {showers}
+export const load: PageServerLoad = async () => {
+    return {showers: await getShowers()}
 }
 
 export const actions = {
@@ -14,17 +14,16 @@ export const actions = {
         const newState = data.get('status') as string === 'true'
 
         // Update airlock if it is not open
-        if (target < showers.length){
-            if (target == showers.length -1) {
+        if (Number.isInteger(target) && target < 5){
+            if (target == 4) {
                 // The last shower is broken
-                return {showers, errorMsg: 'UNABLE TO START SHOWER 5. MANUAL OVERRIDE REQUIRED.'}
+                return {errorMsg: 'UNABLE TO START SHOWER 5. MANUAL OVERRIDE REQUIRED.'}
             }
-            showers[target] = newState
-            console.log({showers})
-            
+
+            await setShower(target, newState)
         }
             
-        return {showers} 
+        return {} 
     }
 } satisfies Actions
 

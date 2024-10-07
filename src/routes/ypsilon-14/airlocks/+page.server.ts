@@ -1,10 +1,10 @@
 import { AirlockName, AirlockState } from '../data';
 import type { PageServerLoad, Actions } from './$types';
 
-import { airlocks } from '$lib/server/ypsilon-14/data';
+import { setAirlock, getAirlocks } from '$lib/server/ypsilon-14/data';
 
-export const load: PageServerLoad = () => {
-    return {airlocks}
+export const load: PageServerLoad = async () => {
+    return {airlocks: await getAirlocks()}
 }
 
 export const actions = {
@@ -16,16 +16,18 @@ export const actions = {
 
         // Update airlock if it is not open
         if (target in AirlockName && newState in AirlockState){
-            const airlock = target as AirlockName
-            if (airlocks[airlock] != AirlockState.OPEN){
-                airlocks[airlock] = newState as AirlockState
+
+            const couldSet = await setAirlock(target as AirlockName, newState as AirlockState)
+
+            const airlocks = await getAirlocks()
+            if (couldSet) {
+                return {}
+            } else {
+                return {errorMsg: `${target} IS OPEN. ABORTING LOCK!`}
             }
             
-            console.log({airlocks})
-            
-            return {airlocks}
         } else {
-            return {airlocks, errorMsg: `${target} IS OPEN. ABORTING LOCK!`}
+            return {errorMsg: `${target} IS OPEN. ABORTING LOCK!`}
         } 
     }
 } satisfies Actions

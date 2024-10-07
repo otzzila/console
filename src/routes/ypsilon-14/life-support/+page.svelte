@@ -8,7 +8,7 @@
 	let {data, form}: {data: PageData, form: ActionData} = $props()
     
     // Most recent airlock information
-    let lifeSupport = $derived(form?.lifeSupport ?? data.lifeSupport)
+    let lifeSupport = $derived(data.lifeSupport)
 
     $effect(() =>{
         console.log({lifeSupport})

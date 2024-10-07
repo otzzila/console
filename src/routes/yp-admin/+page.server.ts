@@ -1,41 +1,60 @@
 import type { PageServerLoad, Actions } from './$types';
 
-import {showers, getHasAdmin, setHasAdmin, getLifeSupport, setLifeSupport, airlocks} from '$lib/server/ypsilon-14/data'
-import type { Status } from '../ypsilon-14/data';
+import {getStatus, setHasAdmin, setLifeSupport, setAirlock, setShower, getAirlocks, forceSetAirlock} from '$lib/server/ypsilon-14/data'
+import { AirlockName, AirlockState } from '../ypsilon-14/data';
 
-const getStatus = () => {
+export const load: PageServerLoad = async () => {
     return {
-        airlocks,
-        showers,
-        hasAdmin: getHasAdmin(),
-        lifeSupport: getLifeSupport(),
-    }
-}
-
-export const load: PageServerLoad = () => {
-    return {
-        status: getStatus() 
+        status: await getStatus() 
     }
 }
 
 export const actions = {
-    showers: async ({request}) => {
+    shower: async ({request}) => {
         const data = await request.formData()
 
         const target = Number(data.get('target') as string)
         const newState = data.get('status') as string === 'true'
 
         // Update airlock if it is not open
-        if (target < showers.length){
-            if (target == showers.length -1) {
+        if (target < 5){
+            if (target == 4) {
                 // The last shower is broken
-                return {status: getStatus(), errorMsg: 'UNABLE TO START SHOWER 5. MANUAL OVERRIDE REQUIRED.'}
+                return {status: await getStatus(), errorMsg: 'UNABLE TO START SHOWER 5. MANUAL OVERRIDE REQUIRED.'}
             }
-            showers[target] = newState
-            console.log({showers})
-            
+            await setShower(target, newState)
         }
             
-        return {status: getStatus()} 
+    },
+
+    hasAdmin: async ({request}) => {
+        const data = await request.formData()
+        
+        const newState = data.get('status') as string === 'true'
+        console.log('SETTING ADMIN ', newState)
+        await setHasAdmin(newState)
+    },
+
+    lifeSupport: async ({request}) => {
+        const data = await request.formData()
+        
+        const newState = data.get('status') as string === 'true'
+
+        await setLifeSupport(newState)
+    },
+
+    airlock: async ({request}) => {
+        const data = await request.formData()
+
+        const target = data.get('target') as string
+        const newState = data.get('status') as string
+
+        // Update airlock if it is not open
+        if (target in AirlockName && newState in AirlockState){
+
+            await forceSetAirlock(target as AirlockName, newState as AirlockState)
+        } else {
+            return {errorMsg: "INVALID DATA"}
+        } 
     }
-}
+} satisfies Actions

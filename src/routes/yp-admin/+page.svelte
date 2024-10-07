@@ -5,8 +5,7 @@
     import type { PageData, ActionData } from './$types';
 	let{data, form}: {data: PageData, form: ActionData} = $props()
 
-    let status = $derived(form?.status ?? data.status)
-
+    let status = $derived(data.status)
     const AIRLOCK_STATES: AirlockState[] = [AirlockState.LOCKED, AirlockState.UNLOCKED, AirlockState.OPEN]
 </script>
 
@@ -15,7 +14,7 @@
         <h2>{name}</h2>
         <div class="px-8">
             {#each AIRLOCK_STATES as state}
-                <form method="post" action="/yp-admin?/airlocks" use:enhance>
+                <form method="post" action="?/airlock" use:enhance>
                     <input type="hidden" name="target" value={name} />
                     <input type="hidden" name="status" value={state} />
                     <button>{state}{state == status.airlocks[name] ? ' <' : ''}</button>
@@ -26,10 +25,10 @@
     </div>
 {/snippet}
 
-<div class="grid grid-cols-1 divide-y">
+<div class="grid grid-cols-1 divide-y-8">
     <div>
         {#each status.showers as showerStatus, idx}
-            <form method="post" action="/yp-admin?/showers" use:enhance>
+            <form method="post" action="?/shower" use:enhance>
                 <input type="hidden" name="target" value={idx} />
                 <input type="hidden" name="status" value={!showerStatus} />
                 <button>SHOWER {idx+1} [&gt; {showerStatus ? "ON " : "OFF"}]</button>
@@ -38,9 +37,16 @@
     </div>
 
     <div>
-        <form method="post" action="/yp-admin?/life-support" use:enhance>
+        <form method="post" action="?/lifeSupport" use:enhance>
             <input type="hidden" name="status" value={!status.lifeSupport} />
             <button>LIFE SUPPORT [&gt; {status.lifeSupport ? "ON " : "OFF"}]</button>
+        </form>
+    </div>
+
+    <div>
+        <form method="post" action="?/hasAdmin" use:enhance>
+            <input type="hidden" name="status" value={!status.hasAdmin} />
+            <button>HAS ADMIN [&gt; {status.hasAdmin ? "YES " : "NO"}]</button>
         </form>
     </div>
 
