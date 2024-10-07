@@ -1,9 +1,6 @@
 import Redis from 'ioredis'
 
 
-import { REDIS_PORT, REDIS_HOST } from '$env/static/private'
+import { REDIS_URL } from '$env/static/private'
 
-export const redis = new Redis({
-    host: REDIS_HOST,
-    port: Number(REDIS_PORT)
-})
+export const redis = new Redis(REDIS_URL)
