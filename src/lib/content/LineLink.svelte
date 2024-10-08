@@ -15,7 +15,7 @@
 
 </script>
 
-<a {href} {onclick} {...others}>
+<a {href} {onclick} {...others} class='line-link'>
     <div class={`line w-full bg-${bgColor} text-${fgColor} hover:text-${bgColor} hover:bg-${fgColor} text-6xl font-primary`}>
         {#if children}
             {@render children()}
