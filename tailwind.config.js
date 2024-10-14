@@ -22,7 +22,7 @@ export default {
   safelist: [
     {
       pattern: /(bg|text)-(primary|secondary|warn|error)/,
-      variants: ['hover', 'focus'],
+      variants: ['hover', 'focus', 'group-focus'],
     }
   ],
   plugins: [],
