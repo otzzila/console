@@ -1,4 +1,4 @@
-export const shipName = 'IMS GRASSHOPPER'
+export const shipName = 'SSS INVINCIBLE 3'
 
 export const spaceYear = 2665
 
